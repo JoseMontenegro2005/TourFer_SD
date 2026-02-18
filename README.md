@@ -58,4 +58,16 @@ Para garantizar la independencia técnica y facilitar el desarrollo en equipo, e
 * El servicio de tours responde confirmando la disponibilidad y el precio final.
 
 ---
+## PARTE 4 — Elección de Arquitectura
+
+Se ha seleccionado una arquitectura de **Microservicios** basada en los siguientes criterios:
+
+* El sistema busca estar diseñado para una audiencia masiva que incluye turistas nacionales e internacionales, además de diversos proveedores turísticos locales, se proyecta una concurrencia de cientos a miles de usuarios activos simultáneamente, aunque esto dependería de la temporada.
+* El sistema debe ser escalable, puesto que, debe ser capaz de soportar incrementos repentinos de tráfico durante épocas de vacaciones o festividades, sin que afecte la disponibilidad de los servicios básicos.
+* Al ser considerado como un sistema de tamaño mediano a grande, puesto que, no es una simple aplicación monolítica, sino que requiere la interacción de al menos cuatro servicios independientes (autenticación, tours, reservas y notificaciones) para completar su flujo de valor.
+  
+### Justificación
+Elegimos esta arquitectura porque permite escalar cada parte de TourFer de forma independiente, ya que, por ejemplo, si en temporada alta hay muchas consultas de tours pero pocas compras, podemos escalar solo el servicio de tours sin afectar el resto
+
+---
 
