@@ -95,7 +95,6 @@ Su pérdida implicaría problemas legales y financieros, además de la pérdida 
 ## PARTE 6 — Identificación de Usuarios
 
 ### ¿Quién usará el sistema?
-Administrador, Proveedores, Clientes.
 * Cliente.
 * Proveedor.
 * Administrador.
