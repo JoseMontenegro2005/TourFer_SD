@@ -104,3 +104,18 @@ Administrador, Proveedores, Clientes.
 No, los administradores tienen acceso global para moderación, gestión de usuarios y auditoría técnica del sistema, los proveedores solo tienen permisos para gestionar su propio inventario y visualizar sus métricas de ventas, y los clientes acceso unicamente para la lectura del catálogo y creación de reservas propias.
 
 ---
+
+## PARTE 7 — Fallas y Riesgos
+
+### Gestión de Resiliencia
+Como ingenieros, hemos diseñado el sistema bajo el principio de "diseñar para el fallo":
+
+| Escenario de Falla | Impacto | Posible Solución |
+| :--- | :--- | :--- |
+| **Falla de Servicio de Pagos** | El usuario no recibe confirmación inmediata y se generaría una incertidumbre sobre si se le cobró el dinero. | Una posible solución sería agregar un estado de transacciones pendientes, para que así el sistema reintente validar la información cuando el servicio está de vuelta en línea. |
+| **Falla de Base de Datos** | El sistema no puede leer ni escribir información, quedaría completamente congelado. | Su posible solución sería tener una copia de la base de datos en tiempo real, para que así, por lo menos pueda leer la información, mientras se soluciona para que pueda escribir. |
+| **Falla de Servidor** | Si esto falla, la aplicación no sería accesible para ningún usuario. | Su solución podría ser un balanceo de cargas, es decir, tener varias instancias de la aplicación, lo que permite redirigir automáticamente el tráfico a otra que siga funcionando. |
+
+---
+
+
