@@ -21,6 +21,8 @@ TourFer buscar centralizar la oferta turística que actualmente se encuentra alg
 La reserva de tours seguiría siendo un proceso manual, propenso a errores de disponibilidad y con poca visibilidad para los pequeños proveedores, perdiendo así oportunidades económicas frente a las grandes agencias internacionales, además, los turistas tendrían dificultades para encontrar opciones seguras. 
 
 ---
+
+
 ## PARTE 2 – Identificar los servicios
 
 ### Funciones principales del sistema
@@ -42,6 +44,7 @@ Para garantizar la independencia técnica y facilitar el desarrollo en equipo, e
 * El envío del correo de confirmación es independiente de la transacción, puesto que si el servidor de correos falla, la reserva sigue siendo válida en la base de datos.
 
 ---
+
 ## PARTE 3 — Comunicación entre servicios
 
 ### ¿Qué servicio necesita información de otro?
@@ -58,6 +61,8 @@ Para garantizar la independencia técnica y facilitar el desarrollo en equipo, e
 * El servicio de tours responde confirmando la disponibilidad y el precio final.
 
 ---
+
+
 ## PARTE 4 — Elección de Arquitectura
 
 Se ha seleccionado una arquitectura de **Microservicios** basada en los siguientes criterios:
@@ -70,12 +75,13 @@ Se ha seleccionado una arquitectura de **Microservicios** basada en los siguient
 Elegimos esta arquitectura porque permite escalar cada parte de TourFer de forma independiente, ya que, por ejemplo, si en temporada alta hay muchas consultas de tours pero pocas compras, podemos escalar solo el servicio de tours sin afectar el resto
 
 ---
+
 ## PARTE 5 — Base de Datos
 
 ### ¿Qué información debe guardarse?
 * Datos de usuario
 * Detalles de tours
-* Historial de reservas y pagos.
+* Historial de reservas y pago.
   
 ### ¿Qué datos son críticos?
 * El historial de transacciones
@@ -85,15 +91,19 @@ Elegimos esta arquitectura porque permite escalar cada parte de TourFer de forma
 Su pérdida implicaría problemas legales y financieros, además de la pérdida de la credibilidad y confianza por parte de todos los usuarios.
 
 ---
+
+## PARTE 6 — Identificación de Usuarios
+
 ### ¿Quién usará el sistema?
 * Cliente.
 * Proveedor.
 * Administrador.
 
 ### ¿Todos pueden hacer lo mismo?
-No, los administradores tienen acceso global para moderación, gestión de usuarios y auditoría técnica del sistema, los proveedores solo tienen permisos para gestionar su propio inventario y visualizar sus métricas de ventas, y los clientes acceso únicamente para la lectura del catálogo y creación de reservas propias.
+No, los administradores tienen acceso global para moderación, gestión de usuarios y auditoría técnica del sistema, los proveedores solo tienen permisos para gestionar su propio inventario y visualizar sus métricas de ventas, y los clientes acceso unicamente para la lectura del catálogo y creación de reservas propias.
 
 ---
+
 ## PARTE 7 — Fallas y Riesgos
 
 | Escenario de Falla | Impacto | Posible Solución |
@@ -103,4 +113,5 @@ No, los administradores tienen acceso global para moderación, gestión de usuar
 | **Falla de Servidor** | Si esto falla, la aplicación no sería accesible para ningún usuario. | Su solución podría ser un balanceo de cargas, es decir, tener varias instancias de la aplicación, lo que permite redirigir automáticamente el tráfico a otra que siga funcionando. |
 
 ---
+
 
