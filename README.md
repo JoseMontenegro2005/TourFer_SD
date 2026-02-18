@@ -56,7 +56,7 @@ Para garantizar la independencia técnica y facilitar el desarrollo en equipo, e
 * El servicio de reservas actúa como el solicitante principal en el flujo de compra.
 * El servicio de catálogo solicita datos de validación en la gestión de tours.
 
-### **¿Quién responde?
+### ¿Quién responde?
 * El servicio de usuarios responde confirmando la autenticidad de la cuenta que realiza la compra, o que desea gestionar los tours.
 * El servicio de tours responde confirmando la disponibilidad y el precio final.
 
