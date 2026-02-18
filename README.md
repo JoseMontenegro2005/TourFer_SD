@@ -42,3 +42,20 @@ Para garantizar la independencia técnica y facilitar el desarrollo en equipo, e
 * El envío del correo de confirmación es independiente de la transacción, puesto que si el servidor de correos falla, la reserva sigue siendo válida en la base de datos.
 
 ---
+## PARTE 3 — Comunicación entre servicios
+
+### ¿Qué servicio necesita información de otro?
+* El servicio de reservas solicita la validación del token JWT del usuario para permitir la transacción.
+* El motor de reservas solicita al catálogo la validación de cupos disponibles y el precio vigente antes de confirmar la compra.
+* El catálogo solicita validación de rol de "Proveedor" o "Admin" antes de permitir la subida o edición de un paquete.
+
+### ¿Quién solicita datos?
+* El servicio de reservas actúa como el solicitante principal en el flujo de compra.
+* El servicio de catálogo solicita datos de validación en la gestión de tours.
+
+### ¿Quién responde?
+* El servicio de usuarios responde confirmando la autenticidad de la cuenta que realiza la compra, o que desea gestionar los tours.
+* El servicio de tours responde confirmando la disponibilidad y el precio final.
+
+---
+
