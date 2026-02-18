@@ -91,3 +91,16 @@ Elegimos esta arquitectura porque permite escalar cada parte de TourFer de forma
 Su pérdida implicaría problemas legales y financieros, además de la pérdida de la credibilidad y confianza por parte de todos los usuarios.
 
 ---
+
+## PARTE 6 — Identificación de Usuarios
+
+### ¿Quién usará el sistema?
+Administrador, Proveedores, Clientes.
+* Cliente.
+* Proveedor.
+* Administrador.
+
+### ¿Todos pueden hacer lo mismo?
+No, los administradores tienen acceso global para moderación, gestión de usuarios y auditoría técnica del sistema, los proveedores solo tienen permisos para gestionar su propio inventario y visualizar sus métricas de ventas, y los clientes acceso unicamente para la lectura del catálogo y creación de reservas propias.
+
+---
