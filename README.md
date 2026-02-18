@@ -75,3 +75,19 @@ Se ha seleccionado una arquitectura de **Microservicios** basada en los siguient
 Elegimos esta arquitectura porque permite escalar cada parte de TourFer de forma independiente, ya que, por ejemplo, si en temporada alta hay muchas consultas de tours pero pocas compras, podemos escalar solo el servicio de tours sin afectar el resto
 
 ---
+
+## PARTE 5 — Base de Datos
+
+### ¿Qué información debe guardarse?
+* Datos de usuario
+* Detalles de tours
+* Historial de reservas y pago.
+  
+### ¿Qué datos son críticos?
+* El historial de transacciones
+* La información privada de los clientes
+
+### ¿Qué pasaría si se pierden?
+Su pérdida implicaría problemas legales y financieros, además de la pérdida de la credibilidad y confianza por parte de todos los usuarios.
+
+---
