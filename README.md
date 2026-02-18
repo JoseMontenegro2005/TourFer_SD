@@ -107,9 +107,6 @@ No, los administradores tienen acceso global para moderación, gestión de usuar
 
 ## PARTE 7 — Fallas y Riesgos
 
-### Gestión de Resiliencia
-Como ingenieros, hemos diseñado el sistema bajo el principio de "diseñar para el fallo":
-
 | Escenario de Falla | Impacto | Posible Solución |
 | :--- | :--- | :--- |
 | **Falla de Servicio de Pagos** | El usuario no recibe confirmación inmediata y se generaría una incertidumbre sobre si se le cobró el dinero. | Una posible solución sería agregar un estado de transacciones pendientes, para que así el sistema reintente validar la información cuando el servicio está de vuelta en línea. |
