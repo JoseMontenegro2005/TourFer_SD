@@ -214,6 +214,7 @@ th {
 <div class="section">
 <h2>🪜 7. Mini Diagrama</h2>
 <p>Dibujen:</p>
+<img src:Diagrama.png>
 <p><strong>
 [Servicio de Reservas] <---> [Service Discovery] <---> [Servicio de Catalogo]
 </strong></p>
