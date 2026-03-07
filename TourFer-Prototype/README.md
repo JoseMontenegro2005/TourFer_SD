@@ -10,11 +10,11 @@ Consta de 3 contenedores principales:
 2. **tourfer-catalogo (Flask):** Servicio expuesto en el puerto `5001` que gestiona la lógica de los tours y guías.
 3. **tourfer-reservas (Flask):** Servicio expuesto en el puerto `5002` que gestiona las transacciones de los usuarios. Se comunica internamente a través de la red de Docker (`tourfer_net`) con el Catálogo para validar la existencia de tours.
 
-## 🚀 Requisitos Previos
+## Requisitos Previos
 * Tener instalado [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 * Asegurarse de tener libres los puertos `5001`, `5002` y `3306` en el equipo host.
 
-## ⚙️ Instrucciones de Ejecución
+## Instrucciones de Ejecución
 
 1. Abre una terminal en la carpeta raíz del proyecto (donde se ubica el archivo `docker-compose.yml`).
 2. Ejecuta el siguiente comando para construir las imágenes y levantar la arquitectura en segundo plano:
