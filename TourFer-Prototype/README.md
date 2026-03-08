@@ -37,19 +37,20 @@ Para registrarse usar:
    POST http://localhost:5002/register
 
 Y en body poner los siguientes datos:
-
-{"nombre": "su nombre",
+{
+   "nombre": "su nombre",
 "email": "su correo",
 "password": "su contraseña";
+}
 
 Saldra un mensaje de registro exitoso, luego se debe hacer login usando:
 
    POST http://localhost:5002/login
 
 Y en body poner los siguientes datos:
-
-{"email": "su correo registrado",
-"password": "su contraseña registrada";}
+{
+"email": "su correo registrado",
+"password": "su contraseña registrada"}
 
 Al enviar la peticion regresará un token, se debe copiar dicho token y ponerlo en Auth / autorizacion, en Auth Type se pone Bearer Token y se pega el respectivo token.
 
