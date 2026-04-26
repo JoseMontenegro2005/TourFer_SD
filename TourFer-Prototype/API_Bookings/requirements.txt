@@ -1,9 +1,0 @@
-Flask
-python-dotenv
-requests
-Flask-MySQLdb
-Flask-JWT-Extended 
-Flask-Bcrypt
-Flask-cors
-gunicorn
-mysqlclient
