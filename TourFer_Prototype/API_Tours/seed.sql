@@ -1,11 +1,9 @@
--- Usamos la base de datos correcta que creó Docker
 USE catalogo_db;
 
 DROP TABLE IF EXISTS tours;
 DROP TABLE IF EXISTS guias;
 
 CREATE TABLE guias (
-    -- CAMBIO: De SERIAL a INT AUTO_INCREMENT para que coincida con la llave foránea
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
@@ -23,7 +21,6 @@ CREATE TABLE tours (
     precio DECIMAL(10, 2) NOT NULL,
     cupos_disponibles INT NOT NULL,
     imagen_url VARCHAR(255),
-    -- CAMBIO: Ahora ambos son INT, compatibilidad perfecta
     guia_id INT,
     FOREIGN KEY (guia_id) REFERENCES guias(id) ON DELETE SET NULL
 );

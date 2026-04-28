@@ -20,7 +20,6 @@ CREATE TABLE usuarios (
     FOREIGN KEY (rol_id) REFERENCES roles(id)
 );
 
--- Datos de prueba para usuarios
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol_id`) VALUES
 (101, 'Ana Pérez', 'ana.perez@email.com', '$2b$12$0TPh9qxvO5hO1wVjVHZ.beiYi8AkScl2UOEdGf7xqYlZghWhq7NHW', 2),
 (102, 'Juan Rodríguez', 'juan.rodriguez@email.com', '$2b$12$wHHKAhXLbDtSBqTkDgGuFujk8OjGHEGnEsF1kTQ11MwUZTBzgCHsm', 2),
