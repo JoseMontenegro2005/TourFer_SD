@@ -12,7 +12,6 @@ app.config.from_object(Config)
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
 
-# --- REGISTRO DE USUARIOS ---
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -20,53 +19,88 @@ def register():
     email = data.get('email')
     password = data.get('password')
 
+    print(f"[LOG] Solicitud POST /register recibida para el email: {email}")
+
     if not email or not password:
+        print(f"[WARNING] Registro rechazado: Faltan datos obligatorios.")
         return jsonify({"error": "Faltan datos obligatorios"}), 400
 
-    # Hasheo de la contraseña
-    pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-
-    conn = get_db_connection(Config)
-    cur = conn.cursor()
+    conn = None
+    cur = None
     try:
+        print(f"[LOG] Generando hash de seguridad para la contraseña...")
+        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+
+        print(f"[LOG] Intentando conectar a usuarios_db...")
+        conn = get_db_connection(Config)
+        cur = conn.cursor()
+        
+        print(f"[LOG] Insertando nuevo usuario '{nombre}' en la base de datos...")
         cur.execute(
             "INSERT INTO usuarios (nombre, email, password) VALUES (%s, %s, %s)",
             (nombre, email, pw_hash)
         )
         conn.commit()
+        
+        print(f"[EVENTO SUCCESS] Usuario {email} registrado exitosamente.")
         return jsonify({"mensaje": "Usuario registrado exitosamente"}), 201
-    except Exception as e:
-        conn.rollback()
-        return jsonify({"error": "El usuario ya existe o hubo un error en la DB"}), 409
-    finally:
-        cur.close()
-        conn.close()
 
-# --- LOGIN (GENERACIÓN DE TOKEN) ---
+    except Exception as e:
+        if conn: conn.rollback()
+        print(f"[ERROR] No se pudo completar el registro de {email}: {str(e)}")
+        return jsonify({"error": "El usuario ya existe o hubo un error en la base de datos"}), 409
+    
+    finally:
+        if cur: cur.close()
+        if conn: conn.close()
+        print(f"[LOG] Conexiones cerradas tras proceso de registro.")
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
 
-    conn = get_db_connection(Config)
-    cur = conn.cursor()
-    cur.execute("SELECT id, nombre, password, rol_id FROM usuarios WHERE email = %s", (email,))
-    user = cur.fetchone()
-    cur.close()
-    conn.close()
+    print(f"[LOG] Intento de inicio de sesión para: {email}")
 
-    if user and bcrypt.check_password_hash(user['password'], password):
-        # El rol_id es clave para que Reservas sepa si es Admin o Cliente
-        claims = {"rol_id": user['rol_id']}
-        access_token = create_access_token(identity=str(user['id']), additional_claims=claims)
+    conn = None
+    cur = None
+    try:
+        print(f"[LOG] Buscando credenciales en usuarios_db...")
+        conn = get_db_connection(Config)
+        cur = conn.cursor()
         
-        return jsonify({
-            "access_token": access_token,
-            "user_name": user['nombre']
-        }), 200
+        cur.execute("SELECT id, nombre, password, rol_id FROM usuarios WHERE email = %s", (email,))
+        user = cur.fetchone()
+        
+        if user:
+            print(f"[LOG] Usuario {email} localizado. Validando contraseña...")
+            if bcrypt.check_password_hash(user['password'], password):
+                print(f"[LOG] Contraseña válida. Generando JWT para usuario ID {user['id']}...")
+                
+                claims = {"rol_id": user['rol_id']}
+                access_token = create_access_token(identity=str(user['id']), additional_claims=claims)
+                
+                print(f"[EVENTO SUCCESS] Login exitoso para {email}. Token entregado.")
+                return jsonify({
+                    "access_token": access_token,
+                    "user_name": user['nombre']
+                }), 200
+            else:
+                print(f"[WARNING] Contraseña incorrecta para el usuario {email}.")
+        else:
+            print(f"[WARNING] El email {email} no se encuentra registrado.")
+
+        return jsonify({"error": "Credenciales inválidas"}), 401
+
+    except Exception as e:
+        print(f"[ERROR] Error crítico durante el login de {email}: {str(e)}")
+        return jsonify({"error": "Error interno durante la autenticación"}), 500
     
-    return jsonify({"error": "Credenciales inválidas"}), 401
+    finally:
+        if cur: cur.close()
+        if conn: conn.close()
+        print(f"[LOG] Flujo de login finalizado.")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
