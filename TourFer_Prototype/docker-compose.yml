@@ -1,0 +1,63 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: tourfer-db
+    env_file: .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./setup_database.sql:/docker-entrypoint-initdb.d/0_setup.sql
+      - ./API_TOURS/seed.sql:/docker-entrypoint-initdb.d/1_tours.sql
+      - ./API_USERS/seed.sql:/docker-entrypoint-initdb.d/2_users.sql
+      - ./API_BOOKINGS/seed.sql:/docker-entrypoint-initdb.d/3_bookings.sql
+    networks:
+      - tourfer_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  users:
+    build: ./API_USERS
+    container_name: tourfer-users
+    ports:
+      - "5003:5000"
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - tourfer_net
+
+  catalogo:
+    build: ./API_Tours
+    container_name: tourfer-catalogo
+    ports:
+      - "5001:5000"
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - tourfer_net
+
+  reservas:
+    build: ./API_Bookings
+    container_name: tourfer-reservas
+    ports:
+      - "5002:5000"
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - tourfer_net
+
+networks:
+  tourfer_net:
+    driver: bridge
+
+volumes:
+  db_data:
