@@ -14,7 +14,7 @@ jwt = JWTManager(app)
 @jwt_required()
 def get_mis_reservas():
     current_user_id = get_jwt_identity()
-    print(f"[LOG] Solicitud GET /mis-reservas recibida para el usuario ID: {current_user_id}")
+    print(f"[LOG] Solicitud GET /mis-reservas recibida para el usuario ID: {current_user_id}", flush=True)
     try:
         conn = get_db_connection(Config)
         cur = conn.cursor()
@@ -22,11 +22,11 @@ def get_mis_reservas():
         reservas = cur.fetchall()
         cur.close()
         conn.close()
-        print(f"[LOG] Consulta exitosa. Reservas encontradas: {len(reservas)}")
+        print(f"[LOG] Consulta exitosa. Reservas encontradas: {len(reservas)}", flush=True)
         return jsonify(reservas), 200
     
     except Exception as e:
-        print(f"[ERROR] Falló la obtención de reservas para el usuario {current_user_id}: {str(e)}")
+        print(f"[ERROR] Falló la obtención de reservas para el usuario {current_user_id}: {str(e)}", flush=True)
         return jsonify({"error": "Error interno al obtener el historial de reserva"})
 
 @app.route('/reservas', methods=['POST'])
@@ -37,10 +37,10 @@ def create_reserva():
     tour_id = data.get('tour_id')
     cantidad = data.get('cantidad_personas')
 
-    print(f"[LOG] Inicio de proceso de reserva: Usuario {user_id} | Tour {tour_id} | Cantidad {cantidad}")
+    print(f"[LOG] Inicio de proceso de reserva: Usuario {user_id} | Tour {tour_id} | Cantidad {cantidad}", flush=True)
 
     try:
-        print(f"[LOG] Enviando petición PATCH a Catálogo para descontar {cantidad} cupos...")
+        print(f"[LOG] Enviando petición PATCH a Catálogo para descontar {cantidad} cupos...", flush=True)
         headers = {'X-API-Key': Config.CATALOGO_API_KEY}
         payload = {"cantidad": cantidad, "accion": "decrementar"}
         
@@ -53,24 +53,24 @@ def create_reserva():
 
         if patch_resp.status_code != 200:
             error_msg = patch_resp.json().get('error', 'Error desconocido')
-            print(f"[WARNING] El Catálogo rechazó la operación: {error_msg} (Status: {patch_resp.status_code})")
+            print(f"[WARNING] El Catálogo rechazó la operación: {error_msg} (Status: {patch_resp.status_code})", flush=True)
             return jsonify({"error": f"Catálogo rechazó la operación: {error_msg}"}), patch_resp.status_code
 
-        print(f"[LOG] Cupos descontados exitosamente en el servicio de Catálogo.")
+        print(f"[LOG] Cupos descontados exitosamente en el servicio de Catálogo.", flush=True)
 
         tour_data = patch_resp.json() 
 
     except requests.exceptions.Timeout:
-        print(f"[ERROR] Timeout al conectar con Catálogo para el tour {tour_id}.")
+        print(f"[ERROR] Timeout al conectar con Catálogo para el tour {tour_id}.", flush=True)
         return jsonify({"error": "El Catálogo tardó demasiado en responder. Intenta de nuevo."}), 504
     
     except Exception as e:
-        print(f"[ERROR] Error de conexión con el servicio de Catálogo: {str(e)}")
+        print(f"[ERROR] Error de conexión con el servicio de Catálogo: {str(e)}", flush=True)
         return jsonify({"error": f"No se pudo conectar con el Catálogo: {str(e)}"}), 503
 
     precio_unidad = data.get('precio_unidad', 0) 
     total = precio_unidad * cantidad
-    print(f"[LOG] Intentando guardar la reserva en la base de datos local...")
+    print(f"[LOG] Intentando guardar la reserva en la base de datos local...", flush=True)
     conn = get_db_connection(Config)
     cur = conn.cursor()
     try:
@@ -81,11 +81,11 @@ def create_reserva():
         reserva_id = cur.lastrowid
         conn.commit()
 
-        print(f"[EVENTO]: Reserva {reserva_id} guardada exitosamente.")
+        print(f"[EVENTO]: Reserva {reserva_id} guardada exitosamente.", flush=True)
         return jsonify({"mensaje": "Reserva creada", "id": reserva_id}), 201
 
     except Exception as e:
-        print(f"[CRÍTICO] Error al insertar en DB: {str(e)}. Iniciando compensación de cupos...")
+        print(f"[CRÍTICO] Error al insertar en DB: {str(e)}. Iniciando compensación de cupos...", flush=True)
         if conn: conn.rollback()
         
         try:
@@ -95,9 +95,9 @@ def create_reserva():
                 headers={'X-API-Key': Config.CATALOGO_API_KEY},
                 timeout=5
             )
-            print(f"[LOG COMPENSACIÓN]: Cupos devueltos correctamente al tour {tour_id}.")
+            print(f"[LOG COMPENSACIÓN]: Cupos devueltos correctamente al tour {tour_id}.", flush=True)
         except Exception as comp_err:
-            print(f"[ALERTA]: No se pudo realizar la compensación automática: {str(comp_err)}")
+            print(f"[ALERTA]: No se pudo realizar la compensación automática: {str(comp_err)}", flush=True)
         
         return jsonify({"error": "Error al procesar la reserva. Se ha revertido el cambio en cupos."}), 500
     finally:
