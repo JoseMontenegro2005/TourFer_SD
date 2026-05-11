@@ -8,10 +8,11 @@
 
   * En /usuarios, /mascotas/\<id\> y /resumen: Insiste. Cada vez que un usuario hace una petición, el Gateway hace la llamada de red al servicio caído, gastando recursos y esperando a que falle.  
   * En /mascotas: Se protege (parcialmente). Después de 3 intentos fallidos, la variable global circuito\_abierto pasa a True. A partir de ese momento, cualquier petición a /mascotas devuelve inmediatamente un 503 ("Servicio temporalmente bloqueado") sin intentar hacer la llamada de red, protegiendo así el sistema.
-
-<img width="803" height="172" alt="imagen" src="https://github.com/user-attachments/assets/22c292aa-38fb-4659-bd5b-6f36f31dfc30" />
-
-<img width="721" height="447" alt="imagen" src="https://github.com/user-attachments/assets/c605b1bf-286d-4e23-bcbc-d460d36c9e09" />
+<p align="center">
+  <img width="803" height="172" alt="imagen" src="https://github.com/user-attachments/assets/22c292aa-38fb-4659-bd5b-6f36f31dfc30" />
+  <br>
+  <img width="721" height="447" alt="imagen" src="https://github.com/user-attachments/assets/c605b1bf-286d-4e23-bcbc-d460d36c9e09" />
+</p>
 
 # **FASE 2 – APLICAR (Extensión del Circuit Breaker)** 
 
@@ -27,9 +28,11 @@
 
   El sistema sigue siendo parcialmente funcional. Si el circuito de "mascotas" se abre porque el backend se cayó, el endpoint de /usuarios sigue funcionando perfectamente y devolviendo estado 200\. En el endpoint /resumen, simplemente se muestra la información de los usuarios y un mensaje de error en la parte de las mascotas, pero la aplicación no colapsa por completo.
 
-<img width="260" height="317" alt="imagen" src="https://github.com/user-attachments/assets/501f3adb-27f7-47a4-81ce-869d1f840401" />
-
-<img width="625" height="422" alt="imagen" src="https://github.com/user-attachments/assets/5bd7e6bf-7f29-420d-a7ea-5b227582a2e2" />
+<p align="center">
+  <img width="260" height="317" alt="imagen" src="https://github.com/user-attachments/assets/501f3adb-27f7-47a4-81ce-869d1f840401" />
+  <br>
+  <img width="625" height="422" alt="imagen" src="https://github.com/user-attachments/assets/5bd7e6bf-7f29-420d-a7ea-5b227582a2e2" />
+</p>
 
 # **FASE 3 – INVESTIGAR (Half-Open)**
 
@@ -53,35 +56,49 @@
   ## 
 
 # **FASE 4 – IMPLEMENTAR (Recuperación)** 
-
-<img width="211" height="42" alt="imagen" src="https://github.com/user-attachments/assets/6141ec7f-8b74-4ebe-8b0d-25adb1b28255" />
-
-<img width="320" height="255" alt="imagen" src="https://github.com/user-attachments/assets/fde0e1cc-7881-4839-9043-81a31fd7bc7e" />
- 
-<img width="588" height="484" alt="imagen" src="https://github.com/user-attachments/assets/a287f589-2be8-44ec-897d-08a1567d999c" />
- 
+<p align="center">
+  <img width="211" height="42" alt="imagen" src="https://github.com/user-attachments/assets/6141ec7f-8b74-4ebe-8b0d-25adb1b28255" />
+  <br>
+  <img width="320" height="255" alt="imagen" src="https://github.com/user-attachments/assets/fde0e1cc-7881-4839-9043-81a31fd7bc7e" />
+  <br> 
+  <img width="588" height="484" alt="imagen" src="https://github.com/user-attachments/assets/a287f589-2be8-44ec-897d-08a1567d999c" />
+</p>
 # **FASE 5 – VALIDAR** 
 
 ## **1\. Escenario: Servicios funcionando** 
 
 En la primera captura   
-<img width="540" height="179" alt="imagen" src="https://github.com/user-attachments/assets/90deeb8e-eeb8-4ce0-b68d-f5167b8b1e0a" />
-<img width="460" height="248" alt="imagen" src="https://github.com/user-attachments/assets/cc195dfc-a97c-41db-9211-b05def6be60b" />
-<img width="540" height="165" alt="imagen" src="https://github.com/user-attachments/assets/b12a988b-0a76-4fd2-acdd-3321d1f5441d" />
+<p align="center">  
+  <img width="540" height="179" alt="imagen" src="https://github.com/user-attachments/assets/90deeb8e-eeb8-4ce0-b68d-f5167b8b1e0a" />
+  <br>
+  <img width="460" height="248" alt="imagen" src="https://github.com/user-attachments/assets/cc195dfc-a97c-41db-9211-b05def6be60b" />
+  <br>
+  <img width="540" height="165" alt="imagen" src="https://github.com/user-attachments/assets/b12a988b-0a76-4fd2-acdd-3321d1f5441d" />
+</p>
+2\. Escenario: Servicio mascotas caído  
+<p align="center">
+  <img width="541" height="181" alt="imagen" src="https://github.com/user-attachments/assets/97431ec1-e74e-48ac-a417-3dfc7c8fe3f9" />
+  <br>
+  <img width="411" height="127" alt="imagen" src="https://github.com/user-attachments/assets/d2364f4a-b57e-4c40-a407-a8a93ba95c1b" />
+  <br>
+  <img width="524" height="117" alt="imagen" src="https://github.com/user-attachments/assets/a15b7a8e-c8c0-4984-9208-a427567a2cc9" />
+</p>
 
-2\. Escenario: Servicio mascotas caído   
-<img width="541" height="181" alt="imagen" src="https://github.com/user-attachments/assets/97431ec1-e74e-48ac-a417-3dfc7c8fe3f9" />
-<img width="411" height="127" alt="imagen" src="https://github.com/user-attachments/assets/d2364f4a-b57e-4c40-a407-a8a93ba95c1b" />
-<img width="524" height="117" alt="imagen" src="https://github.com/user-attachments/assets/a15b7a8e-c8c0-4984-9208-a427567a2cc9" />
-
-3\. Escenario: Circuito abierto   
-<img width="398" height="118" alt="imagen" src="https://github.com/user-attachments/assets/1817c84e-48fd-41a9-8bc4-a609710dacb3" />
-<img width="522" height="275" alt="imagen" src="https://github.com/user-attachments/assets/4d84f5f5-a137-440b-8a35-5fe4bd5c1b44" />
+3\. Escenario: Circuito abierto
+<p align="center">
+  <img width="398" height="118" alt="imagen" src="https://github.com/user-attachments/assets/1817c84e-48fd-41a9-8bc4-a609710dacb3" />
+  <br>
+  <img width="522" height="275" alt="imagen" src="https://github.com/user-attachments/assets/4d84f5f5-a137-440b-8a35-5fe4bd5c1b44" />
+</p>
 
 4\. Escenario: Recuperación del servicio   
-<img width="539" height="177" alt="imagen" src="https://github.com/user-attachments/assets/a26ab987-bef1-48ea-b88a-dd19a1ade293" />
-<img width="410" height="244" alt="imagen" src="https://github.com/user-attachments/assets/b4b84b0f-ccf1-496b-b2bf-4c32c050876b" />
-<img width="519" height="85" alt="imagen" src="https://github.com/user-attachments/assets/b687af2a-d658-421c-ac88-6992f2b9e261" />
+<p align="center">
+  <img width="539" height="177" alt="imagen" src="https://github.com/user-attachments/assets/a26ab987-bef1-48ea-b88a-dd19a1ade293" />
+  <br>
+  <img width="410" height="244" alt="imagen" src="https://github.com/user-attachments/assets/b4b84b0f-ccf1-496b-b2bf-4c32c050876b" />
+  <br>
+  <img width="519" height="85" alt="imagen" src="https://github.com/user-attachments/assets/b687af2a-d658-421c-ac88-6992f2b9e261" />
+</p>
 
 ## **1\. Evidencia por Fases**
 
@@ -109,7 +126,9 @@ En la primera captura
 
 * **Qué hicimos:** Realizamos pruebas de estrés apagando y encendiendo los contenedores en Docker Desktop y monitoreando los logs en tiempo real.  
 * **Observación:** Validamos que el sistema rechaza peticiones instantáneamente cuando el circuito está abierto (ahorrando recursos) y se recupera automáticamente apenas el contenedor del backend vuelve a estar en línea.
+## **2\. Codigo implementado**
 
+Se implementó circuit Breaker en todos los endpoints, además de que se implementó lógica de recuperación o también conocida como half-open
 ## **3\. Análisis Final**
 
 ### **¿Qué cambió en el comportamiento del sistema?**
