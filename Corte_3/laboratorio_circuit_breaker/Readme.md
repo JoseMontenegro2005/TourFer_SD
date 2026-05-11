@@ -68,7 +68,7 @@
 
 ## **1\. Escenario: Servicios funcionando** 
 
-En la primera captura   
+Se puede observar en las capturas que en el docker desktop los servicios están levantados y funcionan correctamente en el navegador, y al revisar los logs en el cmd, todo devuelve un código 200
 <p align="center">  
   <img width="540" height="179" alt="imagen" src="https://github.com/user-attachments/assets/90deeb8e-eeb8-4ce0-b68d-f5167b8b1e0a" />
   <br>
@@ -76,7 +76,10 @@ En la primera captura
   <br>
   <img width="540" height="165" alt="imagen" src="https://github.com/user-attachments/assets/b12a988b-0a76-4fd2-acdd-3321d1f5441d" />
 </p>
-2\. Escenario: Servicio mascotas caído  
+
+## **2\. Escenario: Servicio mascotas caído**  
+En este escenario, el servicio de mascotas fue apagado para comprobar el funcionamiento fingiendo que está caído, al cargar en el navegador, se puede observar una respuesta de error indicando que el servicio no está disponible, al recargar una página por segunda vez, el resultado sigue siendo el mismo, y al revisar los logs, observamos que el número de fallos esta aumentando llegando a 2.
+
 <p align="center">
   <img width="541" height="181" alt="imagen" src="https://github.com/user-attachments/assets/97431ec1-e74e-48ac-a417-3dfc7c8fe3f9" />
   <br>
@@ -85,14 +88,18 @@ En la primera captura
   <img width="524" height="117" alt="imagen" src="https://github.com/user-attachments/assets/a15b7a8e-c8c0-4984-9208-a427567a2cc9" />
 </p>
 
-3\. Escenario: Circuito abierto
+## **3\. Escenario: Circuito abierto**
+En este escenario al recargar una tercera y cuarta vez, el circuito se activa, como se puede observar en los logs, de igual manera, se activa el proceso de recuperación, pero como el servicio sigue caído (apagado) no se podrá recuperar
+
 <p align="center">
   <img width="398" height="118" alt="imagen" src="https://github.com/user-attachments/assets/1817c84e-48fd-41a9-8bc4-a609710dacb3" />
   <br>
   <img width="522" height="275" alt="imagen" src="https://github.com/user-attachments/assets/4d84f5f5-a137-440b-8a35-5fe4bd5c1b44" />
 </p>
 
-4\. Escenario: Recuperación del servicio   
+## **4\. Escenario: Recuperación del servicio**
+En este último escenario, se reactiva el servicio de mascotas (backend) y al recargar la página la información aparece nuevamente indicando que el servicio está activo nuevamente, al revisar los logs, indica que se recuperó exitosamente y que el circuito se cerró
+
 <p align="center">
   <img width="539" height="177" alt="imagen" src="https://github.com/user-attachments/assets/a26ab987-bef1-48ea-b88a-dd19a1ade293" />
   <br>
