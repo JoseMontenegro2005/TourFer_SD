@@ -63,6 +63,7 @@
   <br> 
   <img width="588" height="484" alt="imagen" src="https://github.com/user-attachments/assets/a287f589-2be8-44ec-897d-08a1567d999c" />
 </p>
+
 # **FASE 5 – VALIDAR** 
 
 ## **1\. Escenario: Servicios funcionando** 
