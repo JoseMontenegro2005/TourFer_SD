@@ -56,6 +56,7 @@
   ## 
 
 # **FASE 4 – IMPLEMENTAR (Recuperación)** 
+Se implementó la libreria nativa time nativa de Python, con ella se agregará un nuevo diccionario llamado "tiempo_ultimo_fallo" que permitirá calcular si ya pasó el tiempo de espera controlada para activar el modo Half-Open
 <p align="center">
   <img width="211" height="42" alt="imagen" src="https://github.com/user-attachments/assets/6141ec7f-8b74-4ebe-8b0d-25adb1b28255" />
   <br>
